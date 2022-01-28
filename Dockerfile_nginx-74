@@ -28,7 +28,7 @@ RUN curl --silent --show-error --fail --remote-name-all \
     && rm -fv composer.json 
 
 # Second stage : build final image
-FROM php:7.2-fpm-alpine
+FROM php:7.4-fpm-alpine
 
 LABEL maintainer='Pierre GINDRAUD <pgindraud@gmail.com>'
 
@@ -70,6 +70,7 @@ RUN set -ex; \
     ; \
     pip3 install \
       j2cli \
+      jinja2-getenv-extension \
     ; \
     apk add --no-cache --virtual .build-deps \
         $PHPIZE_DEPS \
@@ -85,13 +86,15 @@ RUN set -ex; \
         libmcrypt-dev \
         libpng-dev \
         libxml2-dev \
+        libzip-dev \
+        libpng-dev \
         net-snmp-dev \
         openldap-dev \
         pcre-dev \
         imagemagick-dev \
     ; \
     docker-php-source extract ; \
-    docker-php-ext-configure gd --with-freetype-dir=/usr --with-png-dir=/usr --with-jpeg-dir=/usr; \
+    docker-php-ext-configure gd --with-freetype=/usr --with-jpeg=/usr; \
     docker-php-ext-configure ldap ; \
     docker-php-ext-install \
        bz2 \
