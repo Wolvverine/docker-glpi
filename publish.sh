@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
 
+set -ev
 
 ## Global settings
 # image name
@@ -79,7 +80,7 @@ else
   echo "-> Pushing to registry.."
 
   ## Login to registry
-  echo "$DOCKERHUB_REGISTRY_PASSWORD" | docker login --username="$DOCKERHUB_REGISTRY_USERNAME" --password-stdin
+  . "./docker_login.sh"
 
   ## Push images
   for tag in ${image_tags[*]}; do

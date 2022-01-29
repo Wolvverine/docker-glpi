@@ -1,10 +1,11 @@
-dist: xenial
+dist: focal
 language: bash
 sudo: required
 
 # Tell Travis to start Docker when it brings up an environment.
 services:
   - docker
+  - pass
 
 env:
   global:
@@ -20,6 +21,7 @@ env:
 before_install:
     - sudo apt update
     - sudo apt install -y shellcheck
+    - sudo apt install -y pass gnupg2 rng-tools
 
 script:
   #
@@ -38,3 +40,4 @@ script:
   #
   - '[ "$TRAVIS_PULL_REQUEST" == "false" ] || exit 0'
   - '[ "$TRAVIS_SECURE_ENV_VARS" == "true" -a -f _test_ok ] && ./publish.sh'
+  
