@@ -64,18 +64,17 @@ if [[ "${VCS_BRANCH}" == "${PRODUCTION_BRANCH}" ]]; then
     publish=true
   fi
 elif [[ "${VCS_BRANCH}" == "develop" ]]; then
-  image_tags=("develop-${image_tags_prefix}${application_version}-${image_version}")
+  image_tags=("${image_tags_prefix}${application_version}-${image_version}-develop")
   if [[ -z "${GLPI_VERSION}" || -n "${UPDATE_LATEST}" ]]; then
-    image_tags+=("develop-${image_tags_prefix}latest")
+    image_tags+=("${image_tags_prefix}-develop")
   fi
   publish=true
 fi
 echo "-> use image tags '${image_tags[*]}'"
 
-
 ## Publish image
 if [[ "${publish}" != "true" ]]; then
-  echo "-> No need to Push to Registry"
+  echo "-> No need to Push to Registry - ${image_tags_prefix}${application_version}-${image_version} exist"
 else
   echo "-> Pushing to registry.."
 
@@ -93,7 +92,6 @@ else
   ## Logout from registry
   docker logout
 fi
-
 
 ## Publish README
 # only for production branch
