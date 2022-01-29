@@ -36,7 +36,7 @@ fi
 
 # Download tools shim.
 if [[ ! -f _tools.sh ]]; then
-  curl -L -o "${PWD}/_tools.sh" https://gist.github.com/Wolvverine/cd03f29d68600c8850aeed8fe2b3d464/raw
+  curl -L -o "${PWD}/_tools.sh" https://gist.github.com/Wolvverine/d6b811105961af0f5ff9edb0693e7ad0/raw
 fi
 # shellcheck disable=SC1090
 source "${PWD}/_tools.sh"
