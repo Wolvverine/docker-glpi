@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
 
+set -ev
 
 ## Global settings
 # image name
@@ -64,23 +65,22 @@ if [[ "${VCS_BRANCH}" == "${PRODUCTION_BRANCH}" ]]; then
     publish=true
   fi
 elif [[ "${VCS_BRANCH}" == "develop" ]]; then
-  image_tags=("develop-${image_tags_prefix}${application_version}-${image_version}")
+  image_tags=("${image_tags_prefix}${application_version}-${image_version}-develop")
   if [[ -z "${GLPI_VERSION}" || -n "${UPDATE_LATEST}" ]]; then
-    image_tags+=("develop-${image_tags_prefix}latest")
+    image_tags+=("${image_tags_prefix}-develop")
   fi
   publish=true
 fi
 echo "-> use image tags '${image_tags[*]}'"
 
-
 ## Publish image
 if [[ "${publish}" != "true" ]]; then
-  echo "-> No need to Push to Registry"
+  echo "-> No need to Push to Registry - ${image_tags_prefix}${application_version}-${image_version} exist"
 else
   echo "-> Pushing to registry.."
 
   ## Login to registry
-  echo "$DOCKERHUB_REGISTRY_PASSWORD" | docker login --username="$DOCKERHUB_REGISTRY_USERNAME" --password-stdin
+  . "./docker_login.sh"
 
   ## Push images
   for tag in ${image_tags[*]}; do
@@ -93,7 +93,6 @@ else
   ## Logout from registry
   docker logout
 fi
-
 
 ## Publish README
 # only for production branch
