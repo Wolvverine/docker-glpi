@@ -6,6 +6,7 @@ session.auto_start=off
 session.use_trans_sid=0
 display_errors=off
 display_startup_errors=On
+opcache.memory_consumption=256
 {#
 {% if "{% raw %}{{ 'PHPFPM_DECORATE_WORKERS_OUTPUT'|getenv('') }}{% endraw %}"  %}
 decorate_workers_output={{ env('PHPFPM_DECORATE_WORKERS_OUTPUT') }}
