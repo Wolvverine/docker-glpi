@@ -1,15 +1,17 @@
-file_uploads=on
-max_execution_time=600
-register_globals=off
-magic_quotes_sybase=off
-session.auto_start=off
-session.use_trans_sid=0
-display_errors=off
-display_startup_errors=On
-opcache.memory_consumption=256
+error_log = /proc/1/fd/2
+log_level = notice
+file_uploads = on
+max_execution_time = 600
+register_globals = off
+magic_quotes_sybase = off
+session.auto_start = off
+session.use_trans_sid = 0
+display_errors = off
+display_startup_errors = off
+opcache.memory_consumption = 256
 {#
 {% if "{% raw %}{{ 'PHPFPM_DECORATE_WORKERS_OUTPUT'|getenv('') }}{% endraw %}"  %}
-decorate_workers_output={{ env('PHPFPM_DECORATE_WORKERS_OUTPUT') }}
+decorate_workers_output = {{ env('PHPFPM_DECORATE_WORKERS_OUTPUT') }}
 {% endif %}
 #}
-memory_limit={{ env('PHP_MEMORY_LIMIT') }}
+memory_limit = {{ env('PHP_MEMORY_LIMIT') }}
