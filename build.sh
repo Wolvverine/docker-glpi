@@ -2,12 +2,6 @@
 
 set -ev
 
-sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable"
-sudo apt update
-sudo apt -y install docker-ce
-echo '{ "experimental": true }' | sudo tee /etc/docker/daemon.json
-sudo service docker restart
-
 ## Global settings
 # image name
 DOCKER_IMAGE="${DOCKER_REPO:-glpi}"
@@ -31,8 +25,8 @@ echo "-> selected GLPI version '${GLPI_VERSION}'"
 # If empty commit, fetch the current from local git rpo
 if [[ -n "${SOURCE_COMMIT}" ]]; then
   VCS_REF="${SOURCE_COMMIT}"
-elif [[ -n "${TRAVIS_COMMIT}" ]]; then
-  VCS_REF="${TRAVIS_COMMIT}"
+elif [[ -n "${CI_COMMIT}" ]]; then
+  VCS_REF="${CI_COMMIT}"
 else
   VCS_REF="$(git rev-parse --short HEAD)"
 fi
