@@ -2,18 +2,34 @@ version: '2.1'
 services:
 
   glpi:
-    image: wolvverine/glpi:nginx-72-latest
+    image: wolvverine/glpi:nginx-74-latest
     environment:
       GLPI_REMOVE_INSTALLER: 'no'
       GLPI_INSTALL_PLUGINS: "\
-        fusioninventory|https://github.com/fusioninventory/fusioninventory-for-glpi/releases/download/glpi9.2%2B1.0/glpi-fusioninventory-9.2.1.0.tar.bz2,\
-        dumpentity|https://forge.glpi-project.org/attachments/download/2089/glpi-dumpentity-1.4.0.tar.gz\
+        fusioninventory|https://github.com/fusioninventory/fusioninventory-for-glpi/releases/download/glpi9.5%2B3.0/fusioninventory-9.5+3.0.tar.bz2,\
+        behaviors|https://github.com/yllen/behaviors/releases/download/v2.5.0/glpi-behaviors-2.5.0.tar.gz,\
+        manufacturersimports|https://github.com/InfotelGLPI/manufacturersimports/releases/download/2.3.1/glpi-manufacturersimports-2.3.1.tar.gz,\
+        mydashboard|https://github.com/InfotelGLPI/mydashboard/releases/download/1.8.2/glpi-mydashboard-1.8.2.tar.gz,\
+        fields|https://github.com/pluginsGLPI/fields/releases/download/1.12.8/glpi-fields-1.12.8.tar.bz2,\
+        reports|https://forge.glpi-project.org/attachments/download/2332/glpi-plugin-reports-1.14.1.tar.gz,\
+        financialreports|https://github.com/InfotelGLPI/financialreports/releases/download/2.6.0/glpi-financialreports-2.6.0.tar.gz,\
+        typology|https://github.com/InfotelGLPI/typology/releases/download/2.7.2/glpi-typology-2.7.2.tar.gz,\
+        additionalalerts|https://github.com/InfotelGLPI/additionalalerts/releases/download/2.2.0/glpi-additionalalerts-2.2.0.tar.gz,\
+        pdf|https://github.com/yllen/pdf/releases/download/v2.0.0/glpi-pdf-2.0.0.tar.gz,\
+        printercounters|https://github.com/InfotelGLPI/printercounters/releases/download/1.7.0/glpi-printercounters-1.7.0.tar.gz,\
+        genericobject|https://github.com/pluginsGLPI/genericobject/releases/download/2.11.0/glpi-genericobject-2.11.0.tar.bz2,\
+        datainjection|https://github.com/pluginsGLPI/datainjection/releases/download/2.9.0/glpi-datainjection-2.9.0.tar.bz2,\
+        mreporting|https://github.com/pluginsGLPI/mreporting/releases/download/1.7.3/glpi-mreporting-1.7.3.tar.bz2,\
+        protocolsmanager|https://github.com/mateusznitka/protocolsmanager/releases/download/v1.4.2/protocolsmanager.tar.gz,\
+        statecheck|https://github.com/ericferon/glpi-statecheck/releases/download/v2.2.3/statecheck-v2.2.3.tar.gz,\
+        ldapcomputers|https://github.com/akm77/ldapcomputers/releases/download/0.4.1/glpi-ldapcomputers-0.4.1.tar.bz2,\
+        custom|https://github.com/pluginsGLPI/custom/releases/download/0.90-1.0.1/glpi-custom-0.90-1.0.1.tar.gz \
         "
     ports:
       - 127.0.0.1:8008:80
     volumes:
-      - data-glpi-files:/var/www/files
-      - data-glpi-config:/var/www/config
+      - glpi-data:/var/www/files
+      - glpi-config:/var/www/config
     depends_on:
       mysqldb:
         condition: service_healthy
@@ -47,6 +63,6 @@ networks:
     driver: bridge
 
 volumes:
-  data-glpi-files:
-  data-glpi-config:
+  glpi-data:
+  glpi-config:
   mysql-glpi-db:
