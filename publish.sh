@@ -42,10 +42,11 @@ fi
 echo "-> use image name '${image_building_name}' for publish"
 
 # If empty branch, fetch the current from local git rpo
+# shellcheck disable=SC2153
 if [[ -n "${SOURCE_BRANCH}" ]]; then
   VCS_BRANCH="${SOURCE_BRANCH}"
-elif [[ -n "${TRAVIS_BRANCH}" ]]; then
-  VCS_BRANCH="${TRAVIS_BRANCH}"
+elif [[ -n "${CI_BRANCH}" ]]; then
+  VCS_BRANCH="${CI_BRANCH}"
 else
   VCS_BRANCH="$(git rev-parse --abbrev-ref HEAD)"
 fi
