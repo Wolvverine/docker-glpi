@@ -1,0 +1,42 @@
+name: GitHub Actions Build
+on: [push]
+
+env:
+  GLPI_VERSION: 10.0.1
+  IMAGE_VARIANT: nginx-74
+  UPDATE_README: 1
+  UPDATE_LATEST: 1
+jobs:
+  Build:
+    runs-on: ubuntu-latest
+    steps:
+      -
+        name: Git checkout
+        uses: actions/checkout@v1
+      -
+        name: Set environment variables
+        run: |
+            echo "CI_BRANCH=${GITHUB_REF##*/}" >> $GITHUB_ENV
+            echo "CI_COMMIT=${GITHUB_SHA}" >> $GITHUB_ENV
+            echo "DOCKER_REPO=${GITHUB_REPOSITORY,,}"  >> $GITHUB_ENV
+        shell: bash
+      -
+        name: Add packages to Linux
+        run: |
+            sudo apt update
+            sudo apt install -y rng-tools coreutils
+      -
+        name: Build Docker
+        run: ./build.sh
+        shell: bash
+      -
+        name: Test Docker Containers
+        run: ./tests.sh && touch _test_ok
+        shell: bash
+      -
+        name: Push to Docker Hub
+        run: '[ -n ${{ secrets.DOCKERHUB_REGISTRY_PASSWORD }} -a -f _test_ok ] && ./publish.sh'
+        env:
+          DOCKERHUB_REGISTRY_PASSWORD: ${{ secrets.DOCKERHUB_REGISTRY_PASSWORD }}
+          DOCKERHUB_REGISTRY_USERNAME: ${{ secrets.DOCKERHUB_REGISTRY_USERNAME }}
+        shell: 'script --return --quiet --command "bash {0}"'
