@@ -4,7 +4,7 @@ on: [push]
 env:
   GLPI_VERSION: 10.0.1
   IMAGE_VARIANT: nginx-74
-  UPDATE_README: 1
+  UPDATE_README: 0
   UPDATE_LATEST: 1
 jobs:
   Build:

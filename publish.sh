@@ -31,9 +31,9 @@ image_version="$(xargs < VERSION)"
 
 if [[ -n ${IMAGE_VARIANT} ]]; then
   image_building_name="${DOCKER_IMAGE}:building_${IMAGE_VARIANT}"
-  image_tags_prefix="${IMAGE_VARIANT}-"
+  image_tags_prefix="${IMAGE_VARIANT}"
     if [[ -n ${GLPI_PHP_XDEBUG} ]]; then
-      image_tags_prefix="${IMAGE_VARIANT}-xdebug-"
+      image_tags_prefix="${IMAGE_VARIANT}-xdebug"
     fi
   echo "-> set image variant '${IMAGE_VARIANT}' for build"
 else
@@ -57,16 +57,16 @@ echo "-> current vcs branch '${VCS_BRANCH}'"
 application_version=$(docker inspect -f '{{ index .Config.Labels "application.glpi.version" }}' "${image_building_name}")
 publish=false
 if [[ "${VCS_BRANCH}" == "${PRODUCTION_BRANCH}" ]]; then
-  image_tags=("${image_tags_prefix}${application_version}-${image_version}")
+  image_tags=("${image_tags_prefix}-${application_version}-${image_version}")
   if [[ -z "${GLPI_VERSION}" || -n "${UPDATE_LATEST}" ]]; then
-    image_tags+=("${image_tags_prefix}latest" "${image_tags_prefix}${application_version}-latest" "latest")
+    image_tags+=("${image_tags_prefix}-latest" "${image_tags_prefix}-${application_version}-latest" "latest")
   fi
   if ! curl -s "https://hub.docker.com/v2/repositories/${username}/${repo}/tags/?page_size=100" \
-       | grep --quiet "\"name\": *\"${image_tags_prefix}${application_version}-${image_version}\""; then
+       | grep --quiet "\"name\": *\"${image_tags_prefix}-${application_version}-${image_version}\""; then
     publish=true
   fi
 elif [[ "${VCS_BRANCH}" == "develop" ]]; then
-  image_tags=("${image_tags_prefix}${application_version}-${image_version}-develop")
+  image_tags=("${image_tags_prefix}-${application_version}-${image_version}-develop")
   if [[ -z "${GLPI_VERSION}" || -n "${UPDATE_LATEST}" ]]; then
     image_tags+=("${image_tags_prefix}-develop")
   fi
@@ -76,7 +76,7 @@ echo "-> use image tags '${image_tags[*]}'"
 
 ## Publish image
 if [[ "${publish}" != "true" ]]; then
-  echo "-> No need to Push to Registry - ${image_tags_prefix}${application_version}-${image_version} exist"
+  echo "-> No need to Push to Registry - ${image_tags_prefix}-${application_version}-${image_version} exist"
 else
   echo "-> Pushing to registry.."
 
@@ -97,9 +97,29 @@ fi
 
 ## Publish README
 # only for production branch
+# Personal access token is restricted to registry APIs only (docker login).
+# It does not allow accessing all APIs because doing that will bypass 2nd factor when an account is 2FA enabled.
+# 403 "access is forbidden with a JWT issued from a personal access token"
+
 if [[ "${VCS_BRANCH}" == "${PRODUCTION_BRANCH}" && -n "${UPDATE_README}" ]]; then
+  DOCKER_REPO_URL="https://hub.docker.com/v2/repositories/${username}/${repo}/"
+  DOCKER_LOGIN_URL="https://hub.docker.com/v2/users/login"
+
   set -o pipefail
-  TOKEN=$(curl --fail --silent -H "Content-Type: application/json" -X POST -d "{\"username\": \"${DOCKERHUB_REGISTRY_USERNAME}\", \"password\":\"${DOCKERHUB_REGISTRY_PASSWORD}\"}" https://hub.docker.com/v2/users/login/ | grep --perl-regexp --only-matching '(?<="token":")[^"]+')
-  curl --fail --silent -H "Authorization: JWT $TOKEN" -X PATCH "https://hub.docker.com/v2/repositories/${username}/${repo}/" --data-urlencode full_description@./README.md
+  TOKEN=$(curl --fail --silent -H "Content-Type: application/json" -X POST \
+            -d "{\"username\": \"${DOCKERHUB_REGISTRY_USERNAME}\", \"password\":\"${DOCKERHUB_REGISTRY_PASSWORD}\"}" \
+            ${DOCKER_LOGIN_URL} \
+            | grep --perl-regexp --only-matching '(?<="token":")[^"]+')
+  
+  RESPONSE_CODE=$(curl --fail --silent --write-out %{response_code} -H "Authorization: JWT $TOKEN" \
+                    -X PATCH --data-urlencode full_description@./README.md \
+                    "${DOCKER_REPO_URL}")
   set +o pipefail
+  if [ "${RESPONSE_CODE}" -eq 200 ]; then
+	echo "Successfully pushed README.md to ${DOCKER_REPO_URL}"
+	exit 0
+    else
+	echo "Unable to push README.md for ${DOCKER_REPO_URL}"
+	exit 1
+fi
 fi

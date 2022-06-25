@@ -1,8 +1,7 @@
 # Docker GLPI
 
-[![Build Status](https://travis-ci.com/Wolvverine/docker-glpi.svg?branch=master)](https://travis-ci.com/Wolvverine/docker-glpi)
-[![](https://images.microbadger.com/badges/image/Wolvverine/glpi.svg)](https://microbadger.com/images/Wolvverine/glpi "Get your own image badge on microbadger.com")
-[![](https://images.microbadger.com/badges/version/Wolvverine/glpi.svg)](https://microbadger.com/images/Wolvverine/glpi "Get your own version badge on microbadger.com")
+![Build Status](https://github.com/Wolvverine/docker-glpi/actions/workflows/github-actions-build.yml/badge.svg?branch=master)
+
 
 This images contains an instance of GLPI web application served by nginx and php5-fpm on port 80
 
