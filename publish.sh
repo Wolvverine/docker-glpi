@@ -104,22 +104,22 @@ fi
 if [[ "${VCS_BRANCH}" == "${PRODUCTION_BRANCH}" && -n "${UPDATE_README}" ]]; then
   DOCKER_REPO_URL="https://hub.docker.com/v2/repositories/${username}/${repo}/"
   DOCKER_LOGIN_URL="https://hub.docker.com/v2/users/login"
-
+  
   set -o pipefail
   TOKEN=$(curl --fail --silent -H "Content-Type: application/json" -X POST \
             -d "{\"username\": \"${DOCKERHUB_REGISTRY_USERNAME}\", \"password\":\"${DOCKERHUB_REGISTRY_PASSWORD}\"}" \
             ${DOCKER_LOGIN_URL} \
             | grep --perl-regexp --only-matching '(?<="token":")[^"]+')
   
-  RESPONSE_CODE=$(curl --fail --silent --write-out %{response_code} -H "Authorization: JWT $TOKEN" \
+  RESPONSE_CODE=$(curl --fail --silent --write-out "%{response_code}" -H "Authorization: JWT $TOKEN" \
                     -X PATCH --data-urlencode full_description@./README.md \
                     "${DOCKER_REPO_URL}")
   set +o pipefail
   if [ "${RESPONSE_CODE}" -eq 200 ]; then
-	echo "Successfully pushed README.md to ${DOCKER_REPO_URL}"
-	exit 0
+        echo "Successfully pushed README.md to ${DOCKER_REPO_URL}"
+        exit 0
     else
-	echo "Unable to push README.md for ${DOCKER_REPO_URL}"
-	exit 1
-fi
+        echo "Unable to push README.md for ${DOCKER_REPO_URL}"
+        exit 1
+    fi
 fi
