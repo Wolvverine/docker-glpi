@@ -21,7 +21,7 @@ jobs:
             echo "DOCKER_REPO=${GITHUB_REPOSITORY,,}" >> $GITHUB_ENV
             echo "GLPI_VERSION=${{ matrix.glpiversion }}" >> $GITHUB_ENV
             echo "IMAGE_VARIANT=${{ matrix.imagevariant }}" >> $GITHUB_ENV
-            echo "GLPI_PHP_XDEBUG=${{ matrix.phpxdebug }}" >> $GITHUB_ENV
+            echo "PHP_XDEBUG=${{ matrix.phpxdebug }}" >> $GITHUB_ENV
         shell: bash
       -
         name: Add packages to Linux
