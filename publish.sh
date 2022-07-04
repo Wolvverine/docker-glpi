@@ -32,7 +32,7 @@ image_version="$(xargs < VERSION)"
 if [[ -n ${IMAGE_VARIANT} ]]; then
   image_building_name="${DOCKER_IMAGE}:building_${IMAGE_VARIANT}"
   image_tags_prefix="${IMAGE_VARIANT}"
-    if [[ -n ${GLPI_PHP_XDEBUG} ]]; then
+    if [[ "${PHP_XDEBUG}" = "yes" ]]; then
       image_tags_prefix="${IMAGE_VARIANT}-xdebug"
     fi
   echo "-> set image variant '${IMAGE_VARIANT}' for build"
