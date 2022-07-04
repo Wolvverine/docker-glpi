@@ -1,4 +1,8 @@
 [www]
+user = www-data
+group = www-data
+clear_env = no
+access.log = /proc/self/fd/1
 listen = /var/run/php-fpm.sock
 listen.owner = www-data
 listen.group = nginx
@@ -14,8 +18,4 @@ pm.max_spare_servers = {{ env('PHPFPM_PM_MAX_SPARE_SERVERS') }}
 pm.process_idle_timeout = {{ env('PHPFPM_PM_PROCESS_IDLE_TIMEOUT') }}
 pm.max_requests = {{ env('PHPFPM_PM_MAX_REQUEST') }}
 catch_workers_output=yes
-php_admin_flag[display_errors]=Off
-php_admin_value[error_log]=/proc/1/fd/2
-php_admin_flag[log_errors]=On
-php_admin_value[error_reporting]=E_ERROR & ~E_CORE_ERROR & ~E_CORE_WARNING
-php_admin_flag[html_errors]=On
+decorate_workers_output = no

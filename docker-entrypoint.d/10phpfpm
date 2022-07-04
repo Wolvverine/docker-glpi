@@ -1,10 +1,11 @@
 #!/bin/sh
-
 set -e
 
 echo 'Configuring PHP FPM...'
 j2 /etc/php-fpm.d/nginx.conf.j2 -o /usr/local/etc/php-fpm.d/zzz-nginx.conf
 j2 /etc/php-fpm.d/custom.ini.j2 -o /usr/local/etc/php-fpm.d/zzz-tuning.ini
-if [ -n "${PHP_XDEBUG}"  ]; then
+# to lowercase
+PHP_XDEBUG=$(echo "${PHP_XDEBUG}" | tr '[:upper:]' '[:lower:]')
+if [ "${PHP_XDEBUG}" = "yes"  ]; then
     j2 /etc/php-fpm.d/xdebug.ini.j2 -o /usr/local/etc/php-fpm.d/xdebug-config.ini
 fi
