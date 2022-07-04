@@ -46,15 +46,16 @@ ENV PHP_XDEBUG "${GLPI_PHP_XDEBUG}"
 ENV PHP_MEMORY_LIMIT 64M
 
 ENV PHPFPM_PM dynamic
-ENV PHPFPM_PM_MAX_CHILDREN 20
+ENV PHPFPM_PM_MAX_CHILDREN 30
 ENV PHPFPM_PM_START_SERVERS 4
-ENV PHPFPM_PM_MIN_SPARE_SERVERS 2
-ENV PHPFPM_PM_MAX_SPARE_SERVERS 4
-ENV PHPFPM_PM_PROCESS_IDLE_TIMEOUT 20s
-ENV PHPFPM_PM_MAX_REQUEST 1000
+ENV PHPFPM_PM_MIN_SPARE_SERVERS 4
+ENV PHPFPM_PM_MAX_SPARE_SERVERS 8
+ENV PHPFPM_PM_PROCESS_IDLE_TIMEOUT 120s
+ENV PHPFPM_PM_MAX_REQUEST 2000
 
 # Install dependencies
 RUN set -ex; \
+    GLPI_PHP_XDEBUG=$(echo "${GLPI_PHP_XDEBUG}" | tr '[:upper:]' '[:lower:]') ; \
     apk --no-cache add \
       curl \
       nginx \
@@ -128,11 +129,15 @@ RUN set -ex; \
     mkdir -p /run/nginx ; \
     find "${GLPI_PATHS_ROOT}" -mindepth 1 -maxdepth 1 -not -name '.*' -and -not -name '..' | xargs rm -rfv
 
+RUN rm -f /usr/local/etc/php-fpm.d/*
+RUN rm -f /etc/nginx/nginx.conf
+RUN rm -f /etc/nginx/conf.d/default.conf
+
 # Copy glpi build
 COPY --from=build_glpi --chown=www-data:www-data ${GLPI_PATHS_ROOT} ${GLPI_PATHS_ROOT}
 
 # Add some configurations files
-RUN if [[ "$GLPI_PHP_XDEBUG" = "yes" ]] ; then \
+RUN if [[ "$GLPI_PHP_XDEBUG" == "yes" ]] ; then \
         echo "Xdebug is on"; \
     else \
         rm -f root\etc\php-fpm.d\xdebug.ini.j2 ; \
