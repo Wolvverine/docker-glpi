@@ -43,3 +43,4 @@ jobs:
           DOCKERHUB_REGISTRY_PASSWORD: ${{ secrets.DOCKERHUB_REGISTRY_PASSWORD }}
           DOCKERHUB_REGISTRY_USERNAME: ${{ secrets.DOCKERHUB_REGISTRY_USERNAME }}
         shell: 'script --return --quiet --command "bash {0}"'
+        
