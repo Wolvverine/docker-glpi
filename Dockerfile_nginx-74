@@ -112,7 +112,7 @@ RUN set -ex; \
        zip \
     ; \
     pecl install apcu && docker-php-ext-enable apcu ; \
-    if [ "$PHP_XDEBUG" = "yes" ] ; then \
+    if [[ "$PHP_XDEBUG" = "yes" ]] ; then \
         pecl install xdebug-3.0.0 && docker-php-ext-enable xdebug ; \
     else \
         echo "PHP_XDEBUG is not build - set $PHP_XDEBUG" ; \
@@ -137,7 +137,7 @@ RUN rm -f /etc/nginx/conf.d/default.conf
 COPY --from=build_glpi --chown=www-data:www-data ${GLPI_PATHS_ROOT} ${GLPI_PATHS_ROOT}
 
 # Add some configurations files
-RUN if [ "$PHP_XDEBUG" = "yes" ] ; then \
+RUN if [[ "$PHP_XDEBUG" = "yes" ]] ; then \
         echo "Xdebug is on"; \
     else \
         rm -f root\etc\php-fpm.d\xdebug.ini.j2 ; \
