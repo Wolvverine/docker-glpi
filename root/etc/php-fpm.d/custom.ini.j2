@@ -6,19 +6,3 @@ log_level = notice
 decorate_workers_output = {{ env('PHPFPM_DECORATE_WORKERS_OUTPUT') }}
 {% endif %}
 #}
-php_admin_value[upload_max_filesize] = 16M
-php_admin_value[opcache.memory_consumption] = 256
-php_admin_value[memory_limit] = {{ env('PHP_MEMORY_LIMIT') }}
-php_admin_value[error_log] = /proc/self/fd/2
-php_admin_value[error_reporting] = E_ERROR & ~E_CORE_ERROR & ~E_CORE_WARNING
-php_admin_value[max_execution_time] = 3600
-php_admin_value[post_max_size] = 20M
-php_admin_flag[display_errors] = Off
-php_admin_flag[log_errors] = On
-php_admin_flag[html_errors] = On
-php_admin_flag[session.auto_start] = Off
-php_admin_flag[session.use_trans_sid] = Off
-php_admin_flag[file_uploads] = On
-php_admin_flag[register_globals] = Off
-php_admin_flag[magic_quotes_sybase] = Off
-php_admin_flag[display_startup_errors] = Off

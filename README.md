@@ -2,17 +2,18 @@
 
 ![Build Status](https://github.com/Wolvverine/docker-glpi/actions/workflows/github-actions-build.yml/badge.svg?branch=master)
 
+![Build Status](https://github.com/Wolvverine/docker-glpi/actions/workflows/github-actions-build.yml/badge.svg?branch=develop)
 
-This images contains an instance of GLPI web application served by nginx and php5-fpm on port 80
+This images contains an instance of GLPI web application served by nginx and php-fpm on port 80.
 
 :warning: Take care of the [changelogs](CHANGELOG.md) because some breaking changes may happen between versions.
 
 ## Supported tags, image variants and respective Dockerfile links
 
-* nginx and PHP7.2 embedded [Dockerfile](https://github.com/Turgon37/docker-glpi/blob/master/Dockerfile_nginx-72)
+* nginx and PHP7.4 embedded [Dockerfile](https://github.com/Wolvverine/docker-glpi/blob/master/Dockerfile_nginx-74)
 
-    * `nginx-72-9.5.5-latest`, `nginx-72-latest`
-    * `nginx-72-9.5.4-latest`, `nginx-72-latest`
+    * `nginx-74-9.5.8-latest`
+    * `nginx-74-10.0.2-latest`
 
 ## Docker Informations
 
