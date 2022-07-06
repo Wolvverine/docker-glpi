@@ -56,10 +56,11 @@ echo "-> current vcs branch '${VCS_BRANCH}'"
 # set the docker publish logic per branch
 application_version=$(docker inspect -f '{{ index .Config.Labels "application.glpi.version" }}' "${image_building_name}")
 publish=false
-if [[ "${VCS_BRANCH}" == "${PRODUCTION_BRANCH}" ]]; then
+if [[ "${VCS_BRANCH}" = "${PRODUCTION_BRANCH}" ]]; then
   image_tags=("${image_tags_prefix}-${application_version}-${image_version}")
   if [[ -z "${GLPI_VERSION}" || -n "${UPDATE_LATEST}" ]]; then
-    image_tags+=("${image_tags_prefix}-latest" "${image_tags_prefix}-${application_version}-latest" "latest")
+    image_tags+=("${image_tags_prefix}-latest" "${image_tags_prefix}-${application_version}-latest" )
+    # TODO "latest"
   fi
   if ! curl -s "https://hub.docker.com/v2/repositories/${username}/${repo}/tags/?page_size=100" \
        | grep --quiet "\"name\": *\"${image_tags_prefix}-${application_version}-${image_version}\""; then
