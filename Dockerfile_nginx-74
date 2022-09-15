@@ -30,7 +30,7 @@ RUN curl --silent --show-error --fail --remote-name-all \
 # Second stage : build final image
 FROM php:7.4-fpm-alpine
 
-LABEL maintainer='Pierre GINDRAUD <pgindraud@gmail.com>'
+LABEL maintainer='Michał Panasiewicz <wolvverinepld@gmail.com>'
 
 ARG GLPI_VERSION
 ARG PHP_XDEBUG
@@ -47,7 +47,6 @@ ENV PHP_UPLOAD_MAX_FILESIZE 16m
 ENV PHP_MAX_EXECUTION_TIME 3600
 ENV PHP_POST_MAX_SIZE 20M
 ENV PHP_OPCACHE_MEM_CONSUMPTION 256
-
 ENV PHP_MEMORY_LIMIT 64M
 
 ENV PHPFPM_PM dynamic

@@ -27,20 +27,28 @@ This images contains an instance of GLPI web application served by nginx and php
 
  * This image takes theses environnements variables as parameters
 
-| Environment                    | Type             | Usage                                                                     |
-| ------------------------------ | ---------------- | ------------------------------------------------------------------------- |
-| TZ                             | String           | Contains the timezone                                                     |
-| GLPI_REMOVE_INSTALLER          | Boolean (yes/no) | Set to yes if it's not the first installation of glpi                     |
-| GLPI_CHMOD_PATHS_FILES         | Boolean (yes/no) | Set to yes to apply chmod/chown on /var/www/files (useful for host mount) |
-| GLPI_INSTALL_PLUGINS           | String           | Comma separated list of plugins to install (see below)                    |
-| PHP_MEMORY_LIMIT               | String           | see PHP memory_limit configuration                                        |
-| PHPFPM_PM                      | String           | see PHPFPM pm configuration                                               |
-| PHPFPM_PM_MAX_CHILDREN         | Integer          | see PHPFPM pm.max_children configuration                                  |
-| PHPFPM_PM_START_SERVERS        | Integer          | see PHPFPM pm.start_servers configuration                                 |
-| PHPFPM_PM_MIN_SPARE_SERVERS    | Integer          | see PHPFPM pm.min_spare_servers configuration                             |
-| PHPFPM_PM_MAX_SPARE_SERVERS    | Integer          | see PHPFPM pm.max_spare_servers configuration                             |
-| PHPFPM_PM_PROCESS_IDLE_TIMEOUT | Mixed            | see PHPFPM pm.process_idle_timeout configuration                          |
-| PHPFPM_PM_MAX_REQUEST          | Integer          | see PHPFPM pm.max_request configuration                                   |
+| Environment                    | Type             | Usage                                                                     | Default  |
+| ------------------------------ | ---------------- | ------------------------------------------------------------------------- | -------- |
+| TZ                             | String           | Contains the timezone                                                     |          |
+| GLPI_REMOVE_INSTALLER          | Boolean (yes/no) | Set to yes if it's not the first installation of glpi                     | no       |
+| GLPI_CHMOD_PATHS_FILES         | Boolean (yes/no) | Set to yes to apply chmod/chown on /var/www/files (useful for host mount) | no       |
+| GLPI_INSTALL_PLUGINS           | String           | Comma separated list of plugins to install (see below)                    |          |
+| PHP_MEMORY_LIMIT               | String           | see PHP memory_limit configuration                                        | 64M      |
+| PHP_UPLOAD_MAX_FILESIZE        | String           | see PHP upload filesize configuration                                     | 16M      |
+| PHP_MAX_EXECUTION_TIME         | String           | see PHP max execution time configuration                                  | 3600     |
+| PHP_POST_MAX_SIZE              | String           | see PHP post_max_size configuration                                       | 20M      |
+| PHP_OPCACHE_MEM_CONSUMPTION    | String           | see PHP opcache_mem_consumption configuration                             | 256      |
+| PHPFPM_PM                      | String           | see PHPFPM pm configuration                                               | dynamic  |
+| PHPFPM_PM_MAX_CHILDREN         | Integer          | see PHPFPM pm.max_children configuration                                  | 30       |
+| PHPFPM_PM_START_SERVERS        | Integer          | see PHPFPM pm.start_servers configuration                                 | 4        |
+| PHPFPM_PM_MIN_SPARE_SERVERS    | Integer          | see PHPFPM pm.min_spare_servers configuration                             | 4        |
+| PHPFPM_PM_MAX_SPARE_SERVERS    | Integer          | see PHPFPM pm.max_spare_servers configuration                             | 8        |
+| PHPFPM_PM_PROCESS_IDLE_TIMEOUT | Mixed            | see PHPFPM pm.process_idle_timeout configuration                          | 120s     |
+| PHPFPM_PM_MAX_REQUEST          | Integer          | see PHPFPM pm.max_request configuration                                   | 2000     |
+| ------------------------------ | ---------------- | ------------------------------------------------------------------------- | -------- |
+| PHPFPM_XDEBUG_CLIENT_PORT      | Integer          | Contains xdebug client host port                                          |          |
+| PHPFPM_XDEBUG_CLIENT_HOST      | String           | Contains xdebug client host IP or DNS name                                |          |
+| ______________________________ | ________________ | _________________________________________________________________________ | ________ |
 
 The GLPI_INSTALL_PLUGINS variable must contains the list of plugins to install (download and extract) before starting glpi.
 This environment variable is a comma separated list of plugins definitions. Each plugin definition must be like this "PLUGINNAME|URL".
