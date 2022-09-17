@@ -1,8 +1,8 @@
 # Docker GLPI
 
-![Build Status](https://github.com/Wolvverine/docker-glpi/actions/workflows/github-actions-build.yml/badge.svg?branch=master)
+![Build Status - Master](https://github.com/Wolvverine/docker-glpi/actions/workflows/github-actions-build.yml/badge.svg?branch=master)
 
-![Build Status](https://github.com/Wolvverine/docker-glpi/actions/workflows/github-actions-build.yml/badge.svg?branch=develop)
+![Build Status - Development](https://github.com/Wolvverine/docker-glpi/actions/workflows/github-actions-build.yml/badge.svg?branch=develop)
 
 This images contains an instance of GLPI web application served by nginx and php-fpm on port 80.
 
@@ -12,8 +12,16 @@ This images contains an instance of GLPI web application served by nginx and php
 
 * nginx and PHP7.4 embedded [Dockerfile](https://github.com/Wolvverine/docker-glpi/blob/master/Dockerfile_nginx-74)
 
-    * `nginx-74-9.5.8-latest`
-    * `nginx-74-10.0.2-latest`
+    * `nginx-74-9.5.9-3.5.1`
+    * `nginx-74-10.0.3-3.5.1`
+
+* Development versions with and without Xdebug:
+
+    * `nginx-74-9.5.9-3.5.1-develop`
+    * `nginx-74-10.0.3-3.5.1-develop`
+    * `nginx-74-xdebug-9.5.9-3.5.1-develop`
+    * `nginx-74-xdebug-10.0.3-3.5.1-develop`
+
 
 ## Docker Informations
 
@@ -159,7 +167,7 @@ version: '2.1'
 services:
 
   glpi:
-    image: wolvverine/docker-glpi:nginx-72-latest
+    image: wolvverine/docker-glpi:nginx-74-latest
     environment:
       GLPI_REMOVE_INSTALLER: 'no'
       GLPI_INSTALL_PLUGINS: "
@@ -169,8 +177,8 @@ services:
     ports:
       - 127.0.0.1:8008:80
     volumes:
-      - data-glpi-files:/var/www/files
-      - data-glpi-config:/var/www/config
+      - glpi-data:/var/www/files
+      - glpi-config:/var/www/config
     depends_on:
       mysqldb:
         condition: service_healthy
@@ -204,7 +212,7 @@ networks:
     driver: bridge
 
 volumes:
-  data-glpi-files:
-  data-glpi-config:
+  glpi-data:
+  glpi-config:
   mysql-glpi-db:
 ```
