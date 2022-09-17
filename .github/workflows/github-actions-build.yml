@@ -6,9 +6,9 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        glpiversion: [10.0.2, 9.5.8]
+        glpiversion: [10.0.3,9.5.9]
         imagevariant: [nginx-74]
-        phpxdebug: [yes, no]
+        phpxdebug: [yes,no]
     steps:
       -
         name: Git checkout 

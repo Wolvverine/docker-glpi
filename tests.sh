@@ -46,7 +46,8 @@ source "${PWD}/_tools.sh"
 
 # shell scripts tests
 # shellcheck disable=SC2038
-find . -name '*.sh' | xargs shellcheck docker-entrypoint.d/*
+find . -name '*.sh' -print0 | xargs -0 shellcheck
+shellcheck docker-entrypoint.d/*
 
 # Image tests
 ./container-structure-test \

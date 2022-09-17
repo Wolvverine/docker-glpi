@@ -1,8 +1,8 @@
 # Docker GLPI
 
-![Build Status](https://github.com/Wolvverine/docker-glpi/actions/workflows/github-actions-build.yml/badge.svg?branch=master)
+![Build Status - Master](https://github.com/Wolvverine/docker-glpi/actions/workflows/github-actions-build.yml/badge.svg?branch=master)
 
-![Build Status](https://github.com/Wolvverine/docker-glpi/actions/workflows/github-actions-build.yml/badge.svg?branch=develop)
+![Build Status - Development](https://github.com/Wolvverine/docker-glpi/actions/workflows/github-actions-build.yml/badge.svg?branch=develop)
 
 This images contains an instance of GLPI web application served by nginx and php-fpm on port 80.
 
@@ -12,8 +12,16 @@ This images contains an instance of GLPI web application served by nginx and php
 
 * nginx and PHP7.4 embedded [Dockerfile](https://github.com/Wolvverine/docker-glpi/blob/master/Dockerfile_nginx-74)
 
-    * `nginx-74-9.5.8-latest`
-    * `nginx-74-10.0.2-latest`
+    * `nginx-74-9.5.9-3.5.1`
+    * `nginx-74-10.0.3-3.5.1`
+
+* Development versions with and without Xdebug:
+
+    * `nginx-74-9.5.9-3.5.1-develop`
+    * `nginx-74-10.0.3-3.5.1-develop`
+    * `nginx-74-xdebug-9.5.9-3.5.1-develop`
+    * `nginx-74-xdebug-10.0.3-3.5.1-develop`
+
 
 ## Docker Informations
 
@@ -27,20 +35,28 @@ This images contains an instance of GLPI web application served by nginx and php
 
  * This image takes theses environnements variables as parameters
 
-| Environment                    | Type             | Usage                                                                     |
-| ------------------------------ | ---------------- | ------------------------------------------------------------------------- |
-| TZ                             | String           | Contains the timezone                                                     |
-| GLPI_REMOVE_INSTALLER          | Boolean (yes/no) | Set to yes if it's not the first installation of glpi                     |
-| GLPI_CHMOD_PATHS_FILES         | Boolean (yes/no) | Set to yes to apply chmod/chown on /var/www/files (useful for host mount) |
-| GLPI_INSTALL_PLUGINS           | String           | Comma separated list of plugins to install (see below)                    |
-| PHP_MEMORY_LIMIT               | String           | see PHP memory_limit configuration                                        |
-| PHPFPM_PM                      | String           | see PHPFPM pm configuration                                               |
-| PHPFPM_PM_MAX_CHILDREN         | Integer          | see PHPFPM pm.max_children configuration                                  |
-| PHPFPM_PM_START_SERVERS        | Integer          | see PHPFPM pm.start_servers configuration                                 |
-| PHPFPM_PM_MIN_SPARE_SERVERS    | Integer          | see PHPFPM pm.min_spare_servers configuration                             |
-| PHPFPM_PM_MAX_SPARE_SERVERS    | Integer          | see PHPFPM pm.max_spare_servers configuration                             |
-| PHPFPM_PM_PROCESS_IDLE_TIMEOUT | Mixed            | see PHPFPM pm.process_idle_timeout configuration                          |
-| PHPFPM_PM_MAX_REQUEST          | Integer          | see PHPFPM pm.max_request configuration                                   |
+| Environment                    | Type             | Usage                                                                     | Default  |
+| ------------------------------ | ---------------- | ------------------------------------------------------------------------- | -------- |
+| TZ                             | String           | Contains the timezone                                                     |          |
+| GLPI_REMOVE_INSTALLER          | Boolean (yes/no) | Set to yes if it's not the first installation of glpi                     | no       |
+| GLPI_CHMOD_PATHS_FILES         | Boolean (yes/no) | Set to yes to apply chmod/chown on /var/www/files (useful for host mount) | no       |
+| GLPI_INSTALL_PLUGINS           | String           | Comma separated list of plugins to install (see below)                    |          |
+| PHP_MEMORY_LIMIT               | String           | see PHP memory_limit configuration                                        | 64M      |
+| PHP_UPLOAD_MAX_FILESIZE        | String           | see PHP upload filesize configuration                                     | 16M      |
+| PHP_MAX_EXECUTION_TIME         | String           | see PHP max execution time configuration                                  | 3600     |
+| PHP_POST_MAX_SIZE              | String           | see PHP post_max_size configuration                                       | 20M      |
+| PHP_OPCACHE_MEM_CONSUMPTION    | String           | see PHP opcache_mem_consumption configuration                             | 256      |
+| PHPFPM_PM                      | String           | see PHPFPM pm configuration                                               | dynamic  |
+| PHPFPM_PM_MAX_CHILDREN         | Integer          | see PHPFPM pm.max_children configuration                                  | 30       |
+| PHPFPM_PM_START_SERVERS        | Integer          | see PHPFPM pm.start_servers configuration                                 | 4        |
+| PHPFPM_PM_MIN_SPARE_SERVERS    | Integer          | see PHPFPM pm.min_spare_servers configuration                             | 4        |
+| PHPFPM_PM_MAX_SPARE_SERVERS    | Integer          | see PHPFPM pm.max_spare_servers configuration                             | 8        |
+| PHPFPM_PM_PROCESS_IDLE_TIMEOUT | Mixed            | see PHPFPM pm.process_idle_timeout configuration                          | 120s     |
+| PHPFPM_PM_MAX_REQUEST          | Integer          | see PHPFPM pm.max_request configuration                                   | 2000     |
+| ------------------------------ | ---------------- | ------------------------------------------------------------------------- | -------- |
+| PHPFPM_XDEBUG_CLIENT_PORT      | Integer          | Contains xdebug client host port                                          |          |
+| PHPFPM_XDEBUG_CLIENT_HOST      | String           | Contains xdebug client host IP or DNS name                                |          |
+| ______________________________ | ________________ | _________________________________________________________________________ | ________ |
 
 The GLPI_INSTALL_PLUGINS variable must contains the list of plugins to install (download and extract) before starting glpi.
 This environment variable is a comma separated list of plugins definitions. Each plugin definition must be like this "PLUGINNAME|URL".
@@ -151,7 +167,7 @@ version: '2.1'
 services:
 
   glpi:
-    image: wolvverine/docker-glpi:nginx-72-latest
+    image: wolvverine/docker-glpi:nginx-74-latest
     environment:
       GLPI_REMOVE_INSTALLER: 'no'
       GLPI_INSTALL_PLUGINS: "
@@ -161,8 +177,8 @@ services:
     ports:
       - 127.0.0.1:8008:80
     volumes:
-      - data-glpi-files:/var/www/files
-      - data-glpi-config:/var/www/config
+      - glpi-data:/var/www/files
+      - glpi-config:/var/www/config
     depends_on:
       mysqldb:
         condition: service_healthy
@@ -196,7 +212,7 @@ networks:
     driver: bridge
 
 volumes:
-  data-glpi-files:
-  data-glpi-config:
+  glpi-data:
+  glpi-config:
   mysql-glpi-db:
 ```
