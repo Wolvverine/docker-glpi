@@ -36,7 +36,7 @@ behaviors|https://github.com/yllen/behaviors/releases/download/v2.7.1/glpi-behav
 pdf|https://github.com/yllen/pdf/releases/download/v2.1.0/glpi-pdf-2.1.0.tar.gz,\
 vip|https://github.com/InfotelGLPI/vip/releases/download/1.8.1/glpi-vip-1.8.1.tar.bz2,\
 statecheck|https://github.com/ericferon/glpi-statecheck/releases/download/v2.3.7/statecheck-v2.3.7.tar.gz" \
- "$repositoryname:$imagetag"
+ "$imagename:$imagetag"
 
 docker start $containername
 sleep 5s
