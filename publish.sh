@@ -85,6 +85,7 @@ else
   . "./docker_login.sh"
 
   ## Push images
+  # shellcheck disable=SC2048
   for tag in ${image_tags[*]}; do
     echo "=> tag image '${image_building_name}' as '${DOCKER_IMAGE}:${tag}'"
     docker tag "${image_building_name}" "${DOCKER_IMAGE}:${tag}"
