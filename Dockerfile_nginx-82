@@ -99,6 +99,7 @@ RUN set -ex; \
        zip \
     ; \
     pecl install apcu && docker-php-ext-enable apcu ; \
+    pecl install xmlrpc-1.0.0RC3 && docker-php-ext-enable xmlrpc ; \
     if [[ "$PHP_XDEBUG" = "yes" ]] ; then \
         pecl install xdebug-3.2.1 && docker-php-ext-enable xdebug ; \
     else \
