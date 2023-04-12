@@ -96,7 +96,6 @@ RUN set -ex; \
        opcache \
        snmp \
        soap \
-       xmlrpc \
        zip \
     ; \
     pecl install apcu && docker-php-ext-enable apcu ; \
