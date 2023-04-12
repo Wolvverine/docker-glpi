@@ -7,7 +7,7 @@ jobs:
     strategy:
       matrix:
         glpiversion: [10.0.7]
-        imagevariant: [nginx-74]
+        imagevariant: [nginx-74,nginx-82]
         phpxdebug: [yes,no]
     steps:
       -
