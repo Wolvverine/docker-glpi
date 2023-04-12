@@ -7,9 +7,9 @@ OLDIFS=$IFS
 IFS=','
 [ ! -f $INPUT ] && { echo "$INPUT file not found"; exit 99; }
 
-while read folder organization repository
+while read -r folder organization repository
 do
-browser_download_url="$(curl https://api.github.com/repos/$organization/$repository/releases/latest -s | jq -r '.assets[0].browser_download_url')"
+browser_download_url="$(curl https://api.github.com/repos/"$organization"/"$repository"/releases/latest -s | jq -r '.assets[0].browser_download_url')"
 echo "$folder|$browser_download_url,\\"
 done < $INPUT
 IFS=$OLDIFS
