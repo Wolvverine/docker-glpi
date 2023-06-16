@@ -128,7 +128,7 @@ COPY --from=build_glpi --chown=www-data:www-data ${GLPI_PATHS_ROOT} ${GLPI_PATHS
 RUN if [[ "$PHP_XDEBUG" = "yes" ]] ; then \
         echo "Xdebug is on"; \
     else \
-        rm -f root\etc\php-fpm.d\xdebug.ini.j2 ; \
+        rm -f root\etc\php-fpm.d\xdebug.conf.j2 ; \
     fi ; 
 
 COPY root/ /
