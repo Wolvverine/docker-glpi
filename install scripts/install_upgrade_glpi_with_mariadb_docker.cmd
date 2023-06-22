@@ -30,7 +30,6 @@ SET DB_port=6303
 REM ####################################################################
 
 ECHO Volumes for container %GLPI_container%
-docker volume create %GLPI_container%-data
 docker volume create %GLPI_container%-config
 docker volume create %GLPI_container%-plugins  
 docker volume create %GLPI_container%-marketplace
