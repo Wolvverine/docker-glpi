@@ -7,6 +7,7 @@ imagename="mariadb"
 imagetag="latest"
 restartpolicy="unless-stopped"
 glpicontainername="glpi"
+dbpassword="your_db_root_password"
 
 #first time
 docker volume create "$containername"-"$glpicontainername"-data
@@ -23,11 +24,11 @@ docker run --detach --restart $restartpolicy --name "$containername" \
  -p 3306:3306 \
  --volume  "$containername"-"$glpicontainername"-data:/var/lib/mysql:Z \
  --volume  "$containername"-"$glpicontainername"-config:/etc/mysql:Z \
- -e MYSQL_ROOT_PASSWORD='xxxxxxxxxxxxxx' \
+ -e MYSQL_ROOT_PASSWORD="$dbpassword" \
  $imagename:$imagetag
 
-docker exec -it $containername mysqlcheck -u root -p --all-databases --check-upgrade --auto-repair
-docker exec -it $containername mysql_upgrade -u root -p
+docker exec -it $containername mariadb-check --all-databases --check-upgrade --auto-repair -u root --password="$dbpassword"
+docker exec -it $containername mariadb-upgrade -u root --password="$dbpassword"
 docker exec -it $containername /bin/sh -c "export TZ='Europe/Warsaw'"
 docker exec -it $containername /bin/sh -c "rm /etc/localtime"
 docker exec -it $containername /bin/sh -c "ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone"
