@@ -53,8 +53,9 @@ docker run --restart unless-stopped --name %GLPI_container% ^
            -e GLPI_CHMOD_PATHS_FILES=yes ^
            -e GLPI_REMOVE_INSTALLER=no ^
            -e GLPI_ENABLE_CRONJOB=yes ^
+           -e PHP_MEMORY_LIMIT=128M ^
            -e TZ="Europe/Warsaw" ^
-            -e GLPI_INSTALL_PLUGINS="fusioninventory|https://github.com/fusioninventory/fusioninventory-for-glpi/releases/download/glpi10.0.6+1.1/fusioninventory-10.0.6+1.1.tar.bz2,fields|https://github.com/pluginsGLPI/fields/releases/download/1.20.6/glpi-fields-1.20.6.tar.bz2,datainjection|https://github.com/pluginsGLPI/datainjection/releases/download/2.13.1/glpi-datainjection-2.13.1.tar.bz2,genericobject|https://github.com/pluginsGLPI/genericobject/releases/download/2.14.3/glpi-genericobject-2.14.3.tar.bz2" ^
+            -e GLPI_INSTALL_PLUGINS="fusioninventory|https://github.com/fusioninventory/fusioninventory-for-glpi/releases/download/glpi10.0.6+1.1/fusioninventory-10.0.6+1.1.tar.bz2,fields|https://github.com/pluginsGLPI/fields/releases/download/1.20.6/glpi-fields-1.20.6.tar.bz2,datainjection|https://github.com/pluginsGLPI/datainjection/releases/download/2.13.2/glpi-datainjection-2.13.2.tar.bz2,genericobject|https://github.com/pluginsGLPI/genericobject/releases/download/2.14.3/glpi-genericobject-2.14.3.tar.bz2" ^
            -d %docker_repository%:%docker_tag%
 
 REM ####################################################################
