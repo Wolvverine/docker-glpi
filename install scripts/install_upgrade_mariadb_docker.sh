@@ -27,6 +27,8 @@ docker run --detach --restart $restartpolicy --name "$containername" \
  -e MYSQL_ROOT_PASSWORD="$dbpassword" \
  $imagename:$imagetag
 
+echo "Wait for start container $containername ."
+sleep 60
 docker exec -it $containername mariadb-check --all-databases --check-upgrade --auto-repair -u root --password="$dbpassword"
 docker exec -it $containername mariadb-upgrade -u root --password="$dbpassword"
 docker exec -it $containername /bin/sh -c "export TZ='Europe/Warsaw'"
