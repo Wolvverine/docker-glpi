@@ -41,6 +41,10 @@ ENV PHPFPM_PM_MAX_SPARE_SERVERS 8
 ENV PHPFPM_PM_PROCESS_IDLE_TIMEOUT 120s
 ENV PHPFPM_PM_MAX_REQUEST 2000
 
+ENV LANG en_US.UTF-8
+ENV LC_ALL en_US.UTF-8
+
+
 # Install dependencies
 RUN set -ex; \
     PHP_XDEBUG=$(echo "${PHP_XDEBUG}" | tr '[:upper:]' '[:lower:]') ; \
