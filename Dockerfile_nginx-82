@@ -61,7 +61,7 @@ RUN set -ex; \
       tar \
       tzdata \
     ; \
-    pip3 install \
+    pip3 install --break-system-packages \
       j2cli \
       jinja2-getenv-extension \
     ; \
