@@ -5,14 +5,12 @@ SET GLPI_container=GLPI
 SET DB_Container=MariaDB
 REM GLPI Docker repository and dockerhub tags
 SET docker_repository=wolvverine/docker-glpi
-SET docker_tag=nginx-74-10.0.6-3.6
+SET docker_tag=nginx-82-10.0.14-3.7
 
 REM aktualne tagi dla kontenera GLPI
 REM www_server-php_version-glpi_version-container_version
-REM nginx-82-10.0.6-3.6
-REM nginx-74-10.0.6-3.6
-REM nginx-82-xdebug-10.0.6-3.6
-REM nginx-74-xdebug-10.0.6-3.6
+REM nginx-82-10.0.14-3.7
+REM nginx-82-xdebug-10.0.14-3.7
 REM https://hub.docker.com/r/wolvverine/docker-glpi/tags
 
 REM Database Docker repository and dockerhub tags

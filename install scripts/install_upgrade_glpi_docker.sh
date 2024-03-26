@@ -3,7 +3,7 @@ set -a
 set -x
 
 containername="glpi"
-imagetag="nginx-74-10.0.3-3.5.1"
+imagetag="nginx-82-10.0.14-3.7"
 imagename="wolvverine/docker-glpi"
 restartpolicy="unless-stopped"
 
