@@ -5,12 +5,12 @@ SET GLPI_container=GLPI
 SET DB_Container=MariaDB
 REM GLPI Docker repository and dockerhub tags
 SET docker_repository=wolvverine/docker-glpi
-SET docker_tag=nginx-82-10.0.14-3.8
+SET docker_tag=nginx-82-10.0.14-3.8.1
 
 REM aktualne tagi dla kontenera GLPI
 REM www_server-php_version-glpi_version-container_version
-REM nginx-82-10.0.14-3.7
-REM nginx-82-xdebug-10.0.14-3.7
+REM nginx-82-10.0.14-3.8
+REM nginx-82-xdebug-10.0.14-3.8
 REM https://hub.docker.com/r/wolvverine/docker-glpi/tags
 
 REM Database Docker repository and dockerhub tags
@@ -53,7 +53,7 @@ docker run --restart unless-stopped --name %GLPI_container% ^
            -e GLPI_ENABLE_CRONJOB=yes ^
            -e PHP_MEMORY_LIMIT=128M ^
            -e TZ="Europe/Warsaw" ^
-            -e GLPI_INSTALL_PLUGINS="fusioninventory|https://github.com/fusioninventory/fusioninventory-for-glpi/releases/download/glpi10.0.6+1.1/fusioninventory-10.0.6+1.1.tar.bz2,fields|https://github.com/pluginsGLPI/fields/releases/download/1.20.6/glpi-fields-1.20.6.tar.bz2,datainjection|https://github.com/pluginsGLPI/datainjection/releases/download/2.13.2/glpi-datainjection-2.13.2.tar.bz2,genericobject|https://github.com/pluginsGLPI/genericobject/releases/download/2.14.3/glpi-genericobject-2.14.3.tar.bz2" ^
+            -e GLPI_INSTALL_PLUGINS="" ^
            -d %docker_repository%:%docker_tag%
 
 REM ####################################################################
