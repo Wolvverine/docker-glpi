@@ -6,7 +6,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        glpiversion: [10.0.14]
+        glpiversion: [10.0.15]
         imagevariant: [nginx-82]
         phpxdebug: [yes,no]
     steps:
