@@ -3,7 +3,7 @@ set -a
 set -x
 
 containername="glpi"
-imagetag="nginx-74-10.0.3-3.5.1"
+imagetag="nginx-82-10.0.14-3.8.1"
 imagename="wolvverine/docker-glpi"
 restartpolicy="unless-stopped"
 
@@ -32,8 +32,6 @@ docker run --restart "$restartpolicy" --detach  --name "$containername" \
  -e GLPI_CHMOD_PATHS_FILES=yes -e GLPI_REMOVE_INSTALLER=yes \
  -e GLPI_ENABLE_CRONJOB=yes  -e TZ="Europe/Warsaw" \
  -e GLPI_INSTALL_PLUGINS="\
-behaviors|https://github.com/yllen/behaviors/releases/download/v2.7.1/glpi-behaviors-2.7.1.tar.gz,\
-pdf|https://github.com/yllen/pdf/releases/download/v2.1.0/glpi-pdf-2.1.0.tar.gz,\
 vip|https://github.com/InfotelGLPI/vip/releases/download/1.8.1/glpi-vip-1.8.1.tar.bz2,\
 statecheck|https://github.com/ericferon/glpi-statecheck/releases/download/v2.3.7/statecheck-v2.3.7.tar.gz" \
  "$imagename:$imagetag"
