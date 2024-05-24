@@ -54,8 +54,8 @@ This images contains an instance of GLPI web application served by nginx and php
 | LANG                           | String           | Contains the locale                                                       | en_US.UTF-8 |
 | LC_ALL                         | String           | Contains the locale                                                       | en_US.UTF-8 |
 | ------------------------------ | ---------------- | ------------------------------------------------------------------------- | ----------- |
-| PHPFPM_XDEBUG_CLIENT_PORT      | Integer          | Contains xdebug client host port                                          |             |
-| PHPFPM_XDEBUG_CLIENT_HOST      | String           | Contains xdebug client host IP or DNS name                                |             |
+| PHPFPM_XDEBUG_CLIENT_PORT      | Integer          | Contains xdebug client port                                               |             |
+| PHPFPM_XDEBUG_CLIENT_HOST      | String           | Contains xdebug client IP or DNS name (ex. host.docker.internal )         |             |
 | ______________________________ | ________________ | _________________________________________________________________________ | ___________ |
 
 The GLPI_INSTALL_PLUGINS variable must contains the list of plugins to install (download and extract) before starting glpi.
