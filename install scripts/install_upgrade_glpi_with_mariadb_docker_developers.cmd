@@ -7,16 +7,16 @@ SET DB_Container=MariaDB
 
 REM GLPI Docker repository and dockerhub tags
 SET docker_repository=wolvverine/docker-glpi
-SET docker_tag=nginx-82-10.0.15-3.8.2
+SET docker_tag=nginx-82-xdebug-10.0.15-3.8.3-develop
 
 REM current tags for the GLPI container
 REM https://hub.docker.com/r/wolvverine/docker-glpi/tags
 REM Example:
 REM www_server-php_version-glpi_version-container_version
 REM nginx-82-10.0.14-3.8.2
-REM nginx-82-xdebug-10.0.14-3.8.2
+REM nginx-82-xdebug-10.0.14-3.8.3
 REM nginx-82-10.0.14-3.8.2-develop
-REM nginx-82-xdebug-10.0.14-3.8.2-develop
+REM nginx-82-xdebug-10.0.14-3.8.3-develop
 
 
 REM Database Docker repository and dockerhub tags
@@ -29,6 +29,11 @@ SET password=your_db_password
 REM External ports for containers
 SET GLPI_EXT_PORT=6080
 SET DB_EXT_PORT=6303
+REM Enter your PORT where you are listening
+SET XDEBUG_CLIENT_PORT=9003
+REM Enter your IP where you are listening
+SET XDEBUG_CLIENT_HOST=host.docker.internal
+
 
 REM ####################################################################
 
@@ -57,6 +62,8 @@ docker run --restart unless-stopped --name %GLPI_container% ^
            -e GLPI_REMOVE_INSTALLER=no ^
            -e GLPI_ENABLE_CRONJOB=yes ^
            -e PHP_MEMORY_LIMIT=128M ^
+           -e PHPFPM_XDEBUG_CLIENT_PORT=%XDEBUG_CLIENT_PORT% ^
+           -e PHPFPM_XDEBUG_CLIENT_HOST=%XDEBUG_CLIENT_HOST% ^
            -e TZ="Europe/Warsaw" ^
             -e GLPI_INSTALL_PLUGINS="" ^
            -d %docker_repository%:%docker_tag%

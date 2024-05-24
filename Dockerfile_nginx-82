@@ -26,6 +26,7 @@ ENV GLPI_CHMOD_PATHS_FILES no
 ENV GLPI_INSTALL_PLUGINS ''
 
 ENV PHP_XDEBUG "${PHP_XDEBUG}"
+
 ENV PHP_UPLOAD_MAX_FILESIZE 16m
 ENV PHP_MAX_EXECUTION_TIME 3600
 ENV PHP_POST_MAX_SIZE 20M
@@ -105,7 +106,7 @@ RUN set -ex; \
     pecl install apcu && docker-php-ext-enable apcu ; \
     pecl install xmlrpc-1.0.0RC3 && docker-php-ext-enable xmlrpc ; \
     if [[ "$PHP_XDEBUG" = "yes" ]] ; then \
-        pecl install xdebug-3.2.1 && docker-php-ext-enable xdebug ; \
+        pecl install xdebug-3.3.2 && docker-php-ext-enable xdebug ; \
     else \
         echo "PHP_XDEBUG is not build - set $PHP_XDEBUG" ; \
     fi ; \
