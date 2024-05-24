@@ -33,6 +33,7 @@ REM Enter your PORT where you are listening
 SET XDEBUG_CLIENT_PORT=9003
 REM Enter your IP where you are listening
 SET XDEBUG_CLIENT_HOST=host.docker.internal
+SET PHPFPM_XDEBUG_IDE_KEY=Docker
 
 
 REM ####################################################################
