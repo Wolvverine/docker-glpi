@@ -1,17 +1,23 @@
 @ECHO OFF
-REM GLPI Install Environment
-REM names containers
+REM GLPI Install Environment script
+
+REM containers names:
 SET GLPI_container=GLPI
 SET DB_Container=MariaDB
+
 REM GLPI Docker repository and dockerhub tags
 SET docker_repository=wolvverine/docker-glpi
-SET docker_tag=nginx-82-10.0.14-3.8.1
+SET docker_tag=nginx-82-10.0.14-3.8.2
 
-REM aktualne tagi dla kontenera GLPI
-REM www_server-php_version-glpi_version-container_version
-REM nginx-82-10.0.14-3.8
-REM nginx-82-xdebug-10.0.14-3.8
+REM current tags for the GLPI container
 REM https://hub.docker.com/r/wolvverine/docker-glpi/tags
+REM Example:
+REM www_server-php_version-glpi_version-container_version
+REM nginx-82-10.0.14-3.8.2
+REM nginx-82-xdebug-10.0.14-3.8.2
+REM nginx-82-10.0.14-3.8.2-develop
+REM nginx-82-xdebug-10.0.14-3.8.2-develop
+
 
 REM Database Docker repository and dockerhub tags
 SET docker_DB_repository=mariadb
