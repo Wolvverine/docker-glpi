@@ -52,7 +52,7 @@ RUN set -ex; \
       tzdata \
     ; \
     pip3 install \
-      j2cli \
+      jinjanator \
     ; \
     apk add --no-cache --virtual .build-deps \
         $PHPIZE_DEPS \
