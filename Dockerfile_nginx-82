@@ -26,6 +26,9 @@ ENV GLPI_CHMOD_PATHS_FILES no
 ENV GLPI_INSTALL_PLUGINS ''
 
 ENV PHP_XDEBUG "${PHP_XDEBUG}"
+ENV PHPFPM_XDEBUG_IDE_KEY Docker
+ENV PHPFPM_XDEBUG_CLIENT_PORT 9003
+ENV PHPFPM_XDEBUG_CLIENT_HOST host.docker.internal
 
 ENV PHP_UPLOAD_MAX_FILESIZE 16m
 ENV PHP_MAX_EXECUTION_TIME 3600
@@ -56,7 +59,6 @@ RUN set -ex; \
       graphviz \
       iputils \
       net-snmp-libs \
-      py3-jinja2 \
       py3-pip \
       supervisor \
       tar \
@@ -85,6 +87,7 @@ RUN set -ex; \
         openldap-dev \
         pcre-dev \
         imagemagick-dev \
+        linux-headers \
     ; \
     docker-php-source extract ; \
     docker-php-ext-configure gd --with-freetype=/usr --with-jpeg=/usr; \
@@ -104,10 +107,10 @@ RUN set -ex; \
     ; \
     pecl install apcu && docker-php-ext-enable apcu ; \
     pecl install xmlrpc-1.0.0RC3 && docker-php-ext-enable xmlrpc ; \
-    if [[ "$PHP_XDEBUG" = "yes" ]] ; then \
+    if [ "$PHP_XDEBUG" = "yes" ] ; then \
         pecl install xdebug-3.3.2 && docker-php-ext-enable xdebug ; \
     else \
-        echo "PHP_XDEBUG is not build - set $PHP_XDEBUG" ; \
+        echo "PHP_XDEBUG is not build - set PHP_XDEBUG to yes." ; \
     fi ; \
     docker-php-source delete ; \
     runDeps="$( \
@@ -130,8 +133,8 @@ RUN rm -f /usr/local/etc/php-fpm.conf
 COPY --from=build_glpi --chown=www-data:www-data ${GLPI_PATHS_ROOT} ${GLPI_PATHS_ROOT}
 
 # Add some configurations files
-RUN if [[ "$PHP_XDEBUG" = "yes" ]] ; then \
-        echo "Xdebug is on"; \
+RUN if [ "$PHP_XDEBUG" = "yes" ] ; then \
+        echo "Xdebug is enabled - PHP_XDEBUG=$PHP_XDEBUG"; \
     else \
         rm -f root\etc\php-fpm.d\xdebug.conf.j2 ; \
     fi ; 

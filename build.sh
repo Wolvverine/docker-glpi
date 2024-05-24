@@ -53,6 +53,7 @@ echo "-> use image name '${image_building_name}' for build"
 ## Build image
 echo "=> building '${image_building_name}' with image version '${image_version}'"
 docker build --build-arg "GLPI_VERSION=${GLPI_VERSION}" \
+             --build-arg "PHP_XDEBUG=${PHP_XDEBUG}" \
              --label "org.label-schema.build-date=$(date -u +'%Y-%m-%dT%H:%M:%SZ')" \
              --label 'org.label-schema.name=glpi' \
              --label 'org.label-schema.description=GLPI web application' \

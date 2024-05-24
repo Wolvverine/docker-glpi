@@ -1,6 +1,5 @@
 zend_extension=xdebug
-extension=xdebug.so
-xdebug.log=/proc/1/fd/2
+xdebug.log=/proc/self/fd/2
 xdebug.start_with_request=yes
 xdebug.mode=debug
 xdebug.discover_client_host=0
@@ -16,3 +15,4 @@ xdebug.collect_assignments = on
 xdebug.collect_return = on
 xdebug.collect_vars = on
 xdebug.dump_undefined = on
+xdebug.idekey = {{ env('PHPFPM_XDEBUG_IDE_KEY') }}

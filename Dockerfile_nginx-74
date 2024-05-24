@@ -51,7 +51,6 @@ RUN set -ex; \
       graphviz \
       iputils \
       net-snmp-libs \
-      py3-jinja2 \
       py3-pip \
       supervisor \
       tar \
