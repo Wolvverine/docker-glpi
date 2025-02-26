@@ -27,7 +27,7 @@ jobs:
         name: Add packages to Linux
         run: |
             sudo apt update
-            sudo apt install -y rng-tools coreutils
+            sudo apt install -y rng-tools coreutils pass
       -
         name: Build Docker GLPI ${{ matrix.glpiversion }} ${{ matrix.imagevariant }} ${{ matrix.phpxdebug }}
         run: ./build.sh
