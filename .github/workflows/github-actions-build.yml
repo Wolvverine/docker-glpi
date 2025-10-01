@@ -6,7 +6,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        glpiversion: [10.0.19]
+        glpiversion: [10.0.20]
         imagevariant: [nginx-82]
         phpxdebug: [yes,no]
     steps:
@@ -30,11 +30,11 @@ jobs:
             sudo apt install -y rng-tools coreutils pass
       -
         name: Build Docker GLPI ${{ matrix.glpiversion }} ${{ matrix.imagevariant }} ${{ matrix.phpxdebug }}
-        run: ./build.sh
+        run: chmod +x ./build.sh && ./build.sh
         shell: bash
       -
         name: Test Docker Containers GLPI ${{ matrix.glpiversion }} ${{ matrix.imagevariant }} ${{ matrix.phpxdebug }}
-        run: ./tests.sh && touch _test_ok
+        run: chmod +x ./tests.sh && ./tests.sh && touch _test_ok
         shell: bash
       -
         name: Push to Docker Hub  GLPI ${{ matrix.glpiversion }} ${{ matrix.imagevariant }} ${{ matrix.phpxdebug }}
