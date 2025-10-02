@@ -16,7 +16,7 @@ FROM php:8.2-fpm-alpine
 LABEL maintainer='Michał Panasiewicz <wolvverinepld@gmail.com>'
 
 ARG GLPI_VERSION
-ARG PHP_XDEBUG
+ARG PHP_XDEBUG=no
 
 ENV GLPI_VERSION="${GLPI_VERSION}"
 ENV GLPI_PATHS_ROOT="/var/www"

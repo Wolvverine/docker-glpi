@@ -21,6 +21,11 @@ if [ -z "$GLPI_VERSION" ]; then
   test -n "$GLPI_VERSION"
 fi
 echo "-> selected GLPI version '${GLPI_VERSION}'"
+echo "-> selected PHP XDEBUG '${PHP_XDEBUG}'"
+echo "-> selected dockerfile '${DOCKERFILE_PATH}'"
+echo "-> selected image name '${DOCKER_IMAGE}'"
+echo "-> selected image variant '${IMAGE_VARIANT}'"
+echo "-> selected docker repo '${DOCKER_REPO}'"
 
 # If empty commit, fetch the current from local git rpo
 if [[ -n "${SOURCE_COMMIT}" ]]; then
