@@ -7,9 +7,18 @@ jobs:
     strategy:
       matrix:
         glpiversion: [10.0.20]
-        imagevariant: [nginx-82]
+        imagevariant: [nginx-82,nginx-84]
         phpxdebug: [yes,no]
     steps:
+      -
+        name: Install Act dependencies
+        if: ${{ env.ACT }}
+        run: |
+          apt update && apt install sudo -y
+      -
+        name: Install dependencies
+        run: |
+          sudo apt update && sudo apt install shellcheck rng-tools coreutils pass -y
       -
         name: Git checkout 
         uses: actions/checkout@v1
@@ -23,11 +32,6 @@ jobs:
             echo "IMAGE_VARIANT=${{ matrix.imagevariant }}" >> $GITHUB_ENV
             echo "PHP_XDEBUG=${{ matrix.phpxdebug }}" >> $GITHUB_ENV
         shell: bash
-      -
-        name: Add packages to Linux
-        run: |
-            sudo apt update
-            sudo apt install -y rng-tools coreutils pass
       -
         name: Build Docker GLPI ${{ matrix.glpiversion }} ${{ matrix.imagevariant }} ${{ matrix.phpxdebug }}
         run: chmod +x ./build.sh && ./build.sh
