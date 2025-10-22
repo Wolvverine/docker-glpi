@@ -60,7 +60,6 @@ for ext in apcu \
            curl \
            dom \
            gd \
-           imap \
            json \
            ldap \
            mysqli \
