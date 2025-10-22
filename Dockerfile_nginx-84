@@ -11,7 +11,7 @@ RUN curl -v --fail -o glpi.tgz -L "https://github.com/glpi-project/glpi/releases
 WORKDIR "${GLPI_PATHS_ROOT}"
 
 # Second stage : build final image
-FROM php:8.2-fpm-alpine
+FROM php:8.4-fpm-alpine
 
 LABEL maintainer='Michał Panasiewicz <wolvverinepld@gmail.com>'
 
@@ -77,7 +77,6 @@ RUN set -ex; \
         curl-dev \
         freetype-dev \
         icu-dev \
-        imap-dev \
         libevent-dev \
         libjpeg-turbo-dev \
         libmcrypt-dev \
@@ -98,7 +97,6 @@ RUN set -ex; \
        bz2 \
        exif \
        gd \
-       imap \
        intl \
        ldap \
        mysqli \
@@ -124,8 +122,7 @@ RUN set -ex; \
     apk add --virtual .nextcloud-phpext-rundeps $runDeps; \
     apk del .build-deps ; \
     mkdir -p /run/nginx ; \
-    find "${GLPI_PATHS_ROOT}" -mindepth 1 -maxdepth 1 -not -name '.*' -and -not -name '..' | xargs rm -rfv
-
+    find "${GLPI_PATHS_ROOT}" -mindepth 1 -maxdepth 1 -not -name '.*' -and -not -name '..' | xargs rm -rfv ;
 RUN rm -f /usr/local/etc/php-fpm.d/*
 RUN rm -f /etc/nginx/nginx.conf
 RUN rm -f /etc/nginx/conf.d/default.conf
