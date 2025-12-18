@@ -80,10 +80,10 @@ done
 #2 Test plugins installation with tar.bz2
 echo '-> 2 Test plugins installation with tar.bz2'
 image_name=glpi_2
-docker run $docker_run_options --name "${image_name}" --env='GLPI_INSTALL_PLUGINS=fields|https://github.com/pluginsGLPI/fields/releases/download/1.22.1/glpi-fields-1.22.1.tar.bz2' "${image_building_name}"
+docker run $docker_run_options --name "${image_name}" --env='GLPI_INSTALL_PLUGINS=vip|https://github.com/pluginsGLPI/vip/releases/download/1.9.1/glpi-vip-1.9.1.tar.bz2' "${image_building_name}"
 wait_for_string_in_container_logs "${image_name}" "${container_up_string}"
 # test
-if ! docker exec "${image_name}" test -d plugins/fields; then
+if ! docker exec "${image_name}" test -d plugins/vip; then
   docker logs "${image_name}"
   false
 fi
@@ -93,10 +93,10 @@ stop_and_remove_container "${image_name}"
 #3 Test plugins installation with tar.gz
 echo '-> 3 Test plugins installation with tar.gz'
 image_name=glpi_3
-docker run $docker_run_options --name "${image_name}" --env='GLPI_INSTALL_PLUGINS=fusioninventory|https://github.com/fusioninventory/fusioninventory-for-glpi/releases/download/glpi9.3%2B1.2/fusioninventory-9.3+1.2.tar.gz' "${image_building_name}"
+docker run $docker_run_options --name "${image_name}" --env='GLPI_INSTALL_PLUGINS=reports|https://github.com/yllen/reports/releases/download/v1.16.0/glpi-reports-1.16.0.tar.gz' "${image_building_name}"
 wait_for_string_in_container_logs "${image_name}" "${container_up_string}"
 # test
-if ! docker exec "${image_name}" test -d plugins/fusioninventory; then
+if ! docker exec "${image_name}" test -d plugins/reports; then
   docker logs "${image_name}"
   false
 fi
@@ -133,10 +133,10 @@ stop_and_remove_container "${image_name}"
 #6 Test plugins installation with zip
 echo '-> 6 Test plugins installation with zip'
 image_name=glpi_6
-docker run $docker_run_options --name "${image_name}" --env='GLPI_INSTALL_PLUGINS=timezones|https://github.com/tomolimo/timezones/releases/download/2.5.2/timezones-2.5.2.zip' "${image_building_name}"
+docker run $docker_run_options --name "${image_name}" --env='GLPI_INSTALL_PLUGINS=archimap|https://github.com/ericferon/glpi-archimap/releases/download/v3.3.11/archimap-v3.3.11.zip' "${image_building_name}"
 wait_for_string_in_container_logs "${image_name}" "${container_up_string}"
 # test
-if ! docker exec "${image_name}" test -d plugins/timezones; then
+if ! docker exec "${image_name}" test -d plugins/archimap; then
   docker logs "${image_name}"
   false
 fi

@@ -142,7 +142,7 @@ COPY /docker-entrypoint.sh /
 COPY /docker-entrypoint.d/* /docker-entrypoint.d/
 COPY /php-fpm.conf /usr/local/etc/php-fpm.conf
 
-RUN chmod -R +x /docker-entrypoint.d/ /usr/local/bin/cronwrapper.py \
+RUN chmod -R +x /docker-entrypoint.sh /docker-entrypoint.d/ /usr/local/bin/cronwrapper.py \
     && chmod -R g=rX,o=--- /var/www/* \
     && addgroup nginx www-data
 
