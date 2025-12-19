@@ -93,6 +93,7 @@ RUN set -ex; \
     docker-php-ext-configure gd --with-freetype=/usr --with-jpeg=/usr; \
     docker-php-ext-configure ldap ; \
     docker-php-ext-install \
+       bcmath \
        bz2 \
        exif \
        gd \
