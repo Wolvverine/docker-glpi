@@ -66,10 +66,10 @@ if [[ "${VCS_BRANCH}" = "${PRODUCTION_BRANCH}" ]]; then
        | grep --quiet "\"name\": *\"${image_tags_prefix}-${application_version}-${image_version}\""; then
     publish=true
   fi
-elif [[ "${VCS_BRANCH}" == "develop" ]]; then
-  image_tags=("${image_tags_prefix}-${application_version}-${image_version}-develop")
+elif [[ "${VCS_BRANCH}" == "dev" ]]; then
+  image_tags=("${image_tags_prefix}-${application_version}-${image_version}-dev")
   if [[ -z "${GLPI_VERSION}" || -n "${UPDATE_LATEST}" ]]; then
-    image_tags+=("${image_tags_prefix}-develop")
+    image_tags+=("${image_tags_prefix}-dev")
   fi
   publish=true
 fi
