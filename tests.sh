@@ -23,14 +23,26 @@ echo "-> use image name '${image_building_name}' for tests"
 ## Prepare
 if [[ -z $(command -v container-structure-test 2>/dev/null) ]]; then
   echo "Retrieving structure-test binary...."
-  if [[ -n "${TRAVIS_OS_NAME}" && "$TRAVIS_OS_NAME" != 'linux' ]]; then
-    echo "container-structure-test only released for Linux at this time."
-    echo "To run on OSX, clone the repository and build using 'make'."
-    exit 1
+  if [[ -n "${RUNNER_OS}" && "$RUNNER_OS" == 'Linux' ]]; then
+    if curl -LO https://github.com/GoogleContainerTools/container-structure-test/releases/latest/download/container-structure-test-linux-amd64; then
+       chmod +x container-structure-test-linux-amd64 \
+       && mv container-structure-test-linux-amd64 container-structure-test
+    else
+       echo "Failed to download or set up container-structure-test for Linux."
+       exit 1
+    fi
+  elif [[ -n "${RUNNER_OS}" && "$RUNNER_OS" == 'macOS' ]]; then
+    if curl -LO https://github.com/GoogleContainerTools/container-structure-test/releases/latest/download/container-structure-test-darwin-arm64; then
+       chmod +x container-structure-test-darwin-arm64 \
+       && mv container-structure-test-darwin-arm64 container-structure-test 
+    else
+       echo "Failed to download or set up container-structure-test for MacOS."
+       exit 1
+    fi
   else
-    curl -sSLO https://storage.googleapis.com/container-structure-test/latest/container-structure-test-linux-amd64 \
-    && chmod +x container-structure-test-linux-amd64 \
-    && mv container-structure-test-linux-amd64 container-structure-test
+    echo "container-structure-test only released for Linux and MacOS at this time."
+    echo "See https://github.com/GoogleContainerTools/container-structure-test for more information."
+    exit 1
   fi
 fi
 

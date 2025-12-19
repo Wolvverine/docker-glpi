@@ -9,5 +9,5 @@ commandTests:
     command: test
     args:
       - '-f'
-      - index.php
+      - public/index.php
     exitCode: 0
