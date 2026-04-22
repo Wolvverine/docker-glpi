@@ -92,5 +92,5 @@ docker exec -it %DB_Container% sh -c "rm /etc/localtime"
 docker exec -it %DB_Container% sh -c "ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone"
 timeout 5 > NUL
 start "" http://localhost:%GLPI_EXT_PORT%
-start "" \\wsl$\docker-desktop-data\data\docker\volumes
+start "" \\wsl$\docker-desktop\mnt\docker-desktop-disk\data\docker\volumes
 PAUSE
