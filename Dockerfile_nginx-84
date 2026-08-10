@@ -110,7 +110,7 @@ RUN set -ex; \
     if [ "$PHP_XDEBUG" = "yes" ] ; then \
         pecl install xdebug-3.3.2 && docker-php-ext-enable xdebug ; \
     else \
-        echo "PHP_XDEBUG is not build - set PHP_XDEBUG to yes." ; \
+        echo "PHP_XDEBUG is not build - set PHP_XDEBUG to 'yes' if you need." ; \
     fi ; \
     docker-php-source delete ; \
     runDeps="$( \

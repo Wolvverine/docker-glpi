@@ -6,7 +6,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        glpiversion: [11.0.8]
+        glpiversion: [10.0.26,11.0.8]
         imagevariant: [nginx-84]
         phpxdebug: [yes,no]
     steps:
@@ -42,7 +42,14 @@ jobs:
         shell: bash
       -
         name: Push to Docker Hub  GLPI ${{ matrix.glpiversion }} ${{ matrix.imagevariant }} ${{ matrix.phpxdebug }}
-        run: '[ -n ${{ secrets.DOCKERHUB_REGISTRY_PASSWORD }} -a -f _test_ok ] && ./publish.sh'
+        run: |
+          if [ -n "${DOCKERHUB_REGISTRY_PASSWORD:-}" ] && [ -n "${DOCKERHUB_REGISTRY_USERNAME:-}" ] && [ -f _test_ok ]; then
+            echo "Publishing image to Docker Hub"
+            ./publish.sh
+          else
+            echo "Skipping Docker Hub publish: missing registry credentials or tests did not succeed"
+            exit 1
+          fi
         env:
           DOCKERHUB_REGISTRY_PASSWORD: ${{ secrets.DOCKERHUB_REGISTRY_PASSWORD }}
           DOCKERHUB_REGISTRY_USERNAME: ${{ secrets.DOCKERHUB_REGISTRY_USERNAME }}

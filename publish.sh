@@ -1,6 +1,5 @@
 #!/usr/bin/env bash
-
-set -ev
+set -e
 
 ## Global settings
 # image name
@@ -8,10 +7,7 @@ DOCKER_IMAGE="${DOCKER_REPO:-glpi}"
 # "production" branch
 PRODUCTION_BRANCH=${PRODUCTION_BRANCH:-master}
 
-
 ## Initialization
-set -e
-
 if [[ ${DOCKER_IMAGE} =~ ([^/]+)/([^/]+) ]]; then
   username=${BASH_REMATCH[1]}
   repo=${BASH_REMATCH[2]}
